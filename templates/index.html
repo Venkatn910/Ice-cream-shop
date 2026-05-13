@@ -1,0 +1,318 @@
+{% extends "base.html" %}
+{% block title %}Gelato Gully — Handcrafted Ice Creams{% endblock %}
+
+{% block extra_styles %}
+/* HERO */
+.hero {
+  min-height: 88vh;
+  background: linear-gradient(135deg, #3D1F0D 0%, #6B2E10 50%, #C05B3A 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  padding: 4rem 2rem;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 70% 60% at 50% 100%, rgba(244,132,95,0.25) 0%, transparent 70%);
+}
+.blobs {
+  position: absolute; inset: 0; pointer-events: none;
+}
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.07;
+  animation: drift 8s ease-in-out infinite alternate;
+}
+.blob1 { width: 500px; height: 500px; background: #FFD6B0; top: -100px; left: -100px; animation-delay: 0s; }
+.blob2 { width: 350px; height: 350px; background: #F4845F; bottom: -50px; right: -50px; animation-delay: 2s; }
+.blob3 { width: 250px; height: 250px; background: #FFF8F0; top: 30%; left: 60%; animation-delay: 4s; }
+@keyframes drift { from { transform: translate(0,0) scale(1); } to { transform: translate(30px, 20px) scale(1.08); } }
+
+.hero-inner { position: relative; z-index: 1; max-width: 700px; }
+.hero-kicker {
+  font-size: 0.82rem;
+  letter-spacing: 0.22em;
+  color: var(--blush);
+  text-transform: uppercase;
+  margin-bottom: 1.2rem;
+  opacity: 0.8;
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3rem, 8vw, 5.5rem);
+  color: var(--cream);
+  line-height: 1.05;
+  margin-bottom: 1.5rem;
+}
+.hero h1 em { color: var(--coral); font-style: italic; }
+.hero p {
+  font-size: 1.15rem;
+  color: var(--blush);
+  max-width: 480px;
+  margin: 0 auto 2.5rem;
+  line-height: 1.7;
+  opacity: 0.9;
+}
+.hero-cta {
+  display: inline-flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.btn-primary {
+  background: var(--coral);
+  color: white;
+  padding: 0.9rem 2.2rem;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: background 0.2s, transform 0.2s;
+  box-shadow: 0 8px 24px rgba(244,132,95,0.4);
+}
+.btn-primary:hover { background: var(--terra); transform: translateY(-2px); }
+.btn-ghost {
+  color: var(--cream);
+  border: 1.5px solid rgba(255,248,240,0.4);
+  padding: 0.9rem 2.2rem;
+  border-radius: 50px;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: border-color 0.2s, background 0.2s;
+}
+.btn-ghost:hover { border-color: var(--cream); background: rgba(255,248,240,0.07); }
+
+.hero-emojis {
+  position: absolute;
+  font-size: 3rem;
+  opacity: 0.15;
+  animation: float 6s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(10deg); }
+}
+
+/* FEATURES */
+.features {
+  padding: 5rem 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2rem;
+}
+.feature-card {
+  background: white;
+  border-radius: 20px;
+  padding: 2.2rem 1.8rem;
+  box-shadow: 0 4px 20px var(--shadow);
+  transition: transform 0.2s;
+}
+.feature-card:hover { transform: translateY(-4px); }
+.feature-icon { font-size: 2.4rem; margin-bottom: 1rem; }
+.feature-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+.feature-card p { font-size: 0.9rem; opacity: 0.65; line-height: 1.6; }
+
+/* FEATURED PRODUCTS */
+.section-title {
+  text-align: center;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: var(--brown);
+  margin-bottom: 0.5rem;
+}
+.section-sub {
+  text-align: center;
+  color: var(--terra);
+  font-size: 0.95rem;
+  margin-bottom: 3rem;
+  opacity: 0.7;
+}
+.products-section {
+  padding: 4rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.6rem;
+}
+.product-card {
+  background: white;
+  border-radius: 22px;
+  padding: 1.8rem 1.5rem 1.5rem;
+  box-shadow: 0 4px 18px var(--shadow);
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.product-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, var(--coral), var(--blush));
+  border-radius: 22px 22px 0 0;
+}
+.product-card:hover { transform: translateY(-6px); box-shadow: 0 12px 36px var(--shadow); }
+.product-emoji { font-size: 3.5rem; text-align: center; margin-bottom: 0.6rem; display: block; }
+.product-tag {
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: var(--warm);
+  color: var(--terra);
+  padding: 0.2rem 0.7rem;
+  border-radius: 50px;
+  display: inline-block;
+  margin-bottom: 0.6rem;
+}
+.product-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  margin-bottom: 0.35rem;
+}
+.product-card p { font-size: 0.82rem; opacity: 0.6; line-height: 1.5; margin-bottom: 1rem; }
+.product-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.price {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--terra);
+}
+.price span { font-size: 0.8rem; font-weight: 400; opacity: 0.6; }
+.add-btn {
+  background: var(--coral);
+  color: white;
+  border: none;
+  padding: 0.5rem 1.1rem;
+  border-radius: 50px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  font-family: 'DM Sans', sans-serif;
+}
+.add-btn:hover { background: var(--terra); transform: scale(1.04); }
+.add-btn:disabled { background: var(--mint); color: var(--brown); cursor: default; transform: none; }
+
+/* CTA BANNER */
+.cta-banner {
+  margin: 2rem auto;
+  max-width: 1100px;
+  padding: 0 2rem;
+}
+.cta-inner {
+  background: var(--brown);
+  border-radius: 28px;
+  padding: 3.5rem 3rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.cta-inner::after {
+  content: '🍦🍨🍧';
+  position: absolute;
+  bottom: -10px; right: 2rem;
+  font-size: 5rem;
+  opacity: 0.1;
+  letter-spacing: 0.5rem;
+}
+.cta-inner h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  color: var(--cream);
+  margin-bottom: 0.8rem;
+}
+.cta-inner p { color: var(--blush); opacity: 0.8; margin-bottom: 1.8rem; }
+{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <div class="blobs">
+    <div class="blob blob1"></div>
+    <div class="blob blob2"></div>
+    <div class="blob blob3"></div>
+  </div>
+  <div class="hero-emojis" style="top:15%; left:8%; animation-delay:0s;">🍦</div>
+  <div class="hero-emojis" style="top:25%; right:10%; animation-delay:1.5s; font-size:2rem;">🍧</div>
+  <div class="hero-emojis" style="bottom:20%; left:15%; animation-delay:3s; font-size:2.5rem;">🍨</div>
+  <div class="hero-inner">
+    <p class="hero-kicker">🍦 Handcrafted in small batches</p>
+    <h1>Life is <em>sweeter</em><br>with gelato</h1>
+    <p>Premium ingredients, bold flavours, and a whole lot of love — welcome to Hyderabad's most beloved ice cream parlour.</p>
+    <div class="hero-cta">
+      <a href="/menu" class="btn-primary">Explore Our Menu</a>
+      <a href="/cart" class="btn-ghost">View Cart 🛒</a>
+    </div>
+  </div>
+</section>
+
+<div class="features">
+  <div class="feature-card">
+    <div class="feature-icon">🥛</div>
+    <h3>Real Ingredients</h3>
+    <p>No artificial flavours. Every scoop uses fresh dairy, real fruits, and premium imports.</p>
+  </div>
+  <div class="feature-card">
+    <div class="feature-icon">🧊</div>
+    <h3>Churned Daily</h3>
+    <p>Made fresh every morning so you always get that perfect creamy texture.</p>
+  </div>
+  <div class="feature-card">
+    <div class="feature-icon">🚴</div>
+    <h3>Fast Delivery</h3>
+    <p>Order online and get your scoops delivered within 30 minutes — cold and perfect.</p>
+  </div>
+  <div class="feature-card">
+    <div class="feature-icon">💚</div>
+    <h3>Vegan Options</h3>
+    <p>Several dairy-free and vegan scoops available in our menu every single day.</p>
+  </div>
+</div>
+
+<section class="products-section">
+  <h2 class="section-title">Today's Favourites</h2>
+  <p class="section-sub">Our most-loved flavours this week</p>
+  <div class="products-grid">
+    {% for product in products[:4] %}
+    <div class="product-card">
+      <span class="product-emoji">{{ product.emoji }}</span>
+      <span class="product-tag">{{ product.tag }}</span>
+      <h3>{{ product.name }}</h3>
+      <p>{{ product.desc }}</p>
+      <div class="product-footer">
+        <div class="price">₹{{ product.price }} <span>/ scoop</span></div>
+        <button class="add-btn" onclick="addToCart({{ product.id }}, this)">+ Add to Cart</button>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <div style="text-align:center; margin-top:2.5rem;">
+    <a href="/menu" class="btn-primary" style="display:inline-block; text-decoration:none;">See All Flavours →</a>
+  </div>
+</section>
+
+<div class="cta-banner">
+  <div class="cta-inner">
+    <h2>Ready to treat yourself?</h2>
+    <p>Browse all {{ products|length }} flavours and build your perfect order.</p>
+    <a href="/menu" class="btn-primary" style="display:inline-block; text-decoration:none;">View Full Menu</a>
+  </div>
+</div>
+{% endblock %}
