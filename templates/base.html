@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{% block title %}Gelato Gully{% endblock %}</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #FFF8F0;
+      --warm: #FFF0DC;
+      --blush: #FFD6B0;
+      --coral: #F4845F;
+      --terra: #C05B3A;
+      --brown: #3D1F0D;
+      --mint: #A8D8B9;
+      --sky: #B8E4F4;
+      --lemon: #FFF2A0;
+      --shadow: rgba(61,31,13,0.12);
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--brown);
+      min-height: 100vh;
+    }
+
+    /* NAV */
+    nav {
+      background: var(--brown);
+      padding: 0 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      color: var(--blush);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+    .nav-brand span { color: var(--coral); font-style: italic; }
+    .nav-links { display: flex; gap: 2rem; align-items: center; }
+    .nav-links a {
+      color: var(--warm);
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      opacity: 0.85;
+      transition: opacity 0.2s;
+    }
+    .nav-links a:hover { opacity: 1; }
+    .cart-btn {
+      background: var(--coral);
+      color: white !important;
+      padding: 0.45rem 1.1rem;
+      border-radius: 50px;
+      font-weight: 500 !important;
+      opacity: 1 !important;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .cart-badge {
+      background: white;
+      color: var(--coral);
+      border-radius: 50%;
+      width: 20px; height: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--brown);
+      color: var(--blush);
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.85rem;
+      margin-top: 5rem;
+      opacity: 0.9;
+    }
+
+    {% block extra_styles %}{% endblock %}
+  </style>
+</head>
+<body>
+<nav>
+  <a href="/" class="nav-brand">Gelato <span>Gully</span></a>
+  <div class="nav-links">
+    <a href="/">Home</a>
+    <a href="/menu">Menu</a>
+    <a href="/cart" class="cart-btn">
+      🛒 Cart
+      {% if cart_count > 0 %}<span class="cart-badge">{{ cart_count }}</span>{% endif %}
+    </a>
+  </div>
+</nav>
+
+{% block content %}{% endblock %}
+
+<footer>
+  <p>🍦 Gelato Gully — Handcrafted happiness, one scoop at a time</p>
+  <p style="margin-top:0.4rem; opacity:0.6;">Hyderabad · Open Daily 11am–11pm</p>
+</footer>
+
+<script>
+  // Global add-to-cart handler
+  async function addToCart(productId, btn) {
+    btn.disabled = true;
+    btn.textContent = '✓ Added!';
+    const res = await fetch(`/add/${productId}`, { method: 'POST' });
+    const data = await res.json();
+    // Update all cart badges
+    document.querySelectorAll('.cart-badge').forEach(b => b.textContent = data.cart_count);
+    if (!document.querySelector('.cart-badge') && data.cart_count > 0) {
+      const cartLink = document.querySelector('.cart-btn');
+      const badge = document.createElement('span');
+      badge.className = 'cart-badge';
+      badge.textContent = data.cart_count;
+      cartLink.appendChild(badge);
+    }
+    setTimeout(() => {
+      btn.disabled = false;
+      btn.textContent = '+ Add to Cart';
+    }, 1200);
+  }
+</script>
+{% block extra_scripts %}{% endblock %}
+</body>
+</html>

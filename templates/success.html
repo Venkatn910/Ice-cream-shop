@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Order Placed! — Gelato Gully{% endblock %}
+
+{% block extra_styles %}
+.success-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 6rem 2rem;
+  text-align: center;
+  min-height: 60vh;
+}
+.confetti {
+  font-size: 4rem;
+  animation: bounce 0.8s ease infinite alternate;
+}
+@keyframes bounce { from { transform: scale(1); } to { transform: scale(1.15) rotate(10deg); } }
+.success-page h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  margin: 1.5rem 0 1rem;
+  color: var(--brown);
+}
+.success-page p { color: var(--terra); font-size: 1.1rem; opacity: 0.8; margin-bottom: 2.5rem; max-width: 480px; line-height: 1.7; }
+.order-num {
+  background: var(--warm);
+  border-radius: 14px;
+  padding: 0.8rem 2rem;
+  font-size: 0.9rem;
+  color: var(--terra);
+  margin-bottom: 2.5rem;
+}
+.order-num strong { color: var(--brown); }
+.btn-primary {
+  background: var(--coral);
+  color: white;
+  padding: 0.9rem 2.2rem;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: background 0.2s;
+}
+.btn-primary:hover { background: var(--terra); }
+{% endblock %}
+
+{% block content %}
+<div class="success-page">
+  <div class="confetti">🎉</div>
+  <h1>Order Placed!</h1>
+  <p>Your gelato is being lovingly scooped and packed. Expect it at your door in about <strong>30 minutes</strong>!</p>
+  <div class="order-num">Order ID: <strong>#GG-{{ range(10000, 99999) | random }}</strong></div>
+  <a href="/" class="btn-primary">Back to Home 🍦</a>
+</div>
+{% endblock %}
