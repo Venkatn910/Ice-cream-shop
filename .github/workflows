@@ -1,0 +1,12 @@
+env:
+  source_name: tanusha-app
+  deploy_name: purnima-shopping-website
+
+jobs:
+  find-developers:
+    runs-on: ubuntu-latest
+
+    if: env.source_name == 'tanusha-app'
+
+    steps:
+      - run: echo "Finding developers"
