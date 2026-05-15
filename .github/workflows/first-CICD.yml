@@ -1,0 +1,15 @@
+name: Venkat-sample-workflow
+
+on:
+  push branches:
+    - Devlopment  #branch_1
+    - UAT         #branch_2
+    - main        #branch_3
+
+#optional
+env:
+  source_name: tanusha-app
+  deploy_name: purnima_shopping_website
+
+jobs:
+  - name: find the developers
