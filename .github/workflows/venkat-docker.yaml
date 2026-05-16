@@ -74,4 +74,4 @@ jobs:
 
             docker pull $REGISTRY/$REPOSITORY:$IMAGE_TAG
 
-            docker run -itd -p 5050:5050 --name venkat-app $REGISTRY/$REPOSITORY:$IMAGE_TAG
+            docker run -itd -p 5050:5000 --name venkat-app $REGISTRY/$REPOSITORY:$IMAGE_TAG
